@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 public class Window {
 	private int width, height;
 	private String title;
+	private double fps_cap, time, prossedTime = 0;
 	
 	private long window;
 	private long monitor;
@@ -17,11 +18,13 @@ public class Window {
 	private boolean[] Keys = new boolean[GLFW.GLFW_KEY_LAST];
 	private boolean[] mouseButtons = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
 
-	public Window(int width, int height, String title) {
+	public Window(int width, int height, int fps, String title) {
 		
 		this.width = width;
 		this.height = height;
 		this.title = title;
+		
+		fps_cap = 1.0 / fps;
 	}
 	
 	public void create() {
@@ -43,8 +46,10 @@ public class Window {
 		
 		GLFWVidMode videoMode = GLFW.glfwGetVideoMode(monitor);
 		GLFW.glfwSetWindowPos(window, (videoMode.width() - width) / 2, (videoMode.height() - height) / 2);
-		
+				
 		GLFW.glfwShowWindow(window);
+		
+		time = getTime();
 	}
 	
 	public void update() {
@@ -57,6 +62,11 @@ public class Window {
 	
 	public void swapBuffers() {
 		GLFW.glfwSwapBuffers(window);
+		
+	}
+	
+	public double getTime() {
+		return (double) System.nanoTime() / (double) 1000000000;
 		
 	}
 	
@@ -109,5 +119,42 @@ public class Window {
 		return buffer.get(0);
 
 	}
+	
+	public boolean isUpdating() {
+		double nextTime = getTime();
+		double pastTime = nextTime - time;
+		prossedTime += pastTime;
+		time = nextTime;
+		
+		while(prossedTime > 1.0 / fps_cap) {
+			prossedTime -= 1.0 / fps_cap;
+			
+			return true;	
+		}
+		return false;
+		
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public double getFPS() {
+		return fps_cap;
+	}
+
+	public long getWindow() {
+		return window;
+	}
+	
+	
 	
 }
