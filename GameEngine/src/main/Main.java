@@ -17,13 +17,15 @@ public class Main {
 		 window.setBackgroundColor(1.0f, 0.0f, 0.0f);
 		 
 		 Model model = new Model(new float[] {
-				 -0.5f, 0.5f, 0.0f,
-				  0.5f, 0.5f, 0.0f,
-				  0.5f, -0.5f, 0.0f,
+				 -0.5f, 0.5f, 0.0f,  //Top Left 0
+				  0.5f, 0.5f, 0.0f,  //Top Right 1
+				  -0.5f, -0.5f, 0.0f,// Bottom Left 2
+				  0.5f, -0.5f, 0.0f, //Bottom Right 3
+				  
+		 }, new int[] {
+			0, 1, 2,
+			2, 3, 1
 				 
-				  -0.5f, -0.5f, 0.0f,
-				  0.5f, -0.5f, 0.0f,
-				  -0.5f, 0.5f, 0.0f,
 		 });
 		 model.create();
 
