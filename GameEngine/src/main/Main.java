@@ -10,7 +10,7 @@ import engine.shaders.BasicShader;
 public class Main {
 	
 	public static final int WIDTH = 800, HEIGHT = 600, FPS = 60;
-	public static Window window = new Window(WIDTH, HEIGHT, FPS, "LWJGL 3");
+	public static Window window = new Window(WIDTH, HEIGHT, FPS, "Debug");
 	public static Renderer renderer = new Renderer();
 	public static BasicShader shader = new BasicShader();
 
