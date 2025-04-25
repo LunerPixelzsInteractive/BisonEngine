@@ -62,6 +62,7 @@ public class Window {
 		time = getTime();
 	}
 	
+	
 	public void update() {
 		for(int i = 0; i < GLFW.GLFW_KEY_LAST; i++) Keys[i] = isKeyDown(i);
 		for(int i = 0; i < GLFW.GLFW_MOUSE_BUTTON_LAST; i++) mouseButtons[i] = isMouseDown(i);

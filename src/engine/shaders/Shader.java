@@ -3,7 +3,11 @@ package engine.shaders;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.FloatBuffer;
 
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
@@ -57,10 +61,39 @@ public abstract class Shader {
 		}
 	}
 
-	public abstract void bindAllAttributes();
+	protected abstract void bindAllAttributes();
 	
 	public void bindAttributes(int index, String location) {
 		GL20.glBindAttribLocation(programID, index, location);
+		
+	}
+	
+	protected abstract void getAllUniforms();
+	
+	protected int getUniform(String name) {
+		return GL20.glGetUniformLocation(programID, name);
+		
+	}
+	
+	protected void loadFloatUniform(int location, float value) {
+		GL20.glUniform1f(location, value);
+		
+	}
+	
+	protected void loadIntUniform(int location, int value) {
+		GL20.glUniform1i(location, value);
+		
+	}
+	
+	protected void loadVectorUniform(int location, Vector3f value) {
+		GL20.glUniform3f(location, value.x, value.y, value.z);
+		
+	}
+	
+	protected void loadMatrixUniform(int location, Matrix4f value) {
+		FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
+		value.get(buffer);
+		GL20.glUniformMatrix4fv(location, false, buffer);
 		
 	}
 	
